@@ -1,0 +1,2 @@
+# CourseView
+Frontend for CourseDB.
