@@ -1,0 +1,33 @@
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@if (this.Visible)
+{
+    <MudPaper Class="align-center">
+        <MudGrid Class="Justify align-center" Spacing="3" Justify="Justify.Center" Style="background-color: rgb(79, 79, 79); color: white; margin-top: 10px; border-radius: 20px; align-content: center">
+            <MudItem xs=3 Style="align-content: center">
+                <MudText Class="align-center">
+                    @this.Instance.CRN
+                </MudText>
+            </MudItem>
+            <MudItem xs=3>
+                <MudText>
+                    @this.Instance.Subject
+                </MudText>
+            </MudItem>
+            <MudItem xs="3">
+                <MudText>
+                    @this.Instance.CourseNumber
+                </MudText>
+            </MudItem>
+            <MudItem xs=3>
+                @this.Instance.Title
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+}
+
+@code {
+     
+}

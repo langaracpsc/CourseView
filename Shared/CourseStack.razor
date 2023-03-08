@@ -1,0 +1,13 @@
+<h3>CourseStack</h3>
+
+<div style="height:100vh;overflow-y:scroll; border-radius: 20px; padding: 10px 10px 10px 10px; align-content: center;">
+@* <MudPaper Class="d-flex align-content-center flex-wrap flex-grow-1 gap-4" Style="overflow-y: scroll;" MaxWidth="608px" Height="100vh" Elevation="0"> *@
+    <Virtualize Items="Courses">
+        <CourseItem Instance=@context Visible="true"></CourseItem>
+    </Virtualize>
+@* </MudPaper> *@
+</div>
+@code {
+    
+} 
+ 

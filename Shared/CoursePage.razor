@@ -1,0 +1,74 @@
+@page "/Course/{subject}/{courseNumber:int}"
+
+
+<PageTitle></PageTitle>
+
+@if (this.Initialized && this.CurrentCourse == null)
+{
+    <h3 align="center">404 Page Not Found.</h3>
+}
+else if (this.Initialized)
+{
+    <MudPaper Class="align-center">
+        <MudGrid Class="Justify align-center" Spacing="3" Justify="Justify.Center" Style="background-color: rgb(79, 79, 79); color: white; margin-top: 10px; border-radius: 20px; align-content: center">
+            <MudItem xs=3 Style="align-content: center">
+                <MudText Class="align-center">
+                    @this.CurrentCourse.CRN
+                </MudText>
+            </MudItem>
+            <MudItem xs=3>
+                <MudText>
+                    @this.CurrentCourse.Subject
+                </MudText>
+            </MudItem>
+            <MudItem xs="3">
+                <MudText>
+                    @this.CurrentCourse.CourseNumber
+                </MudText>
+            </MudItem>
+            <MudItem xs=3>
+                @this.CurrentCourse.Title
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+}
+
+
+@code {
+    Course CurrentCourse;
+
+    public string Title;
+    
+    [Parameter]
+    public string Subject { get; set; }
+
+    [Parameter]
+    public int CourseNumber { get; set; }
+
+    public bool Initialized = false;
+    
+    protected override async void OnInitialized()
+    {
+        if (CourseManager.Courses == null)
+        {
+            Console.WriteLine("Fetching");
+            CourseManager.Courses = await CourseManager.FetchCourses();
+        }
+        Console.WriteLine($"Course Size: {CourseManager.Courses.Length}");
+        
+        this.Title = $"{Subject}{CourseNumber}";
+        
+        
+        this.CurrentCourse = GetCourse(this.Subject, this.CourseNumber);
+
+        this.Initialized = true;
+        
+        StateHasChanged();
+    }
+
+    public Course GetCourse(string subj, int coursenum)
+    {
+        return CourseManager.GetCourseBySubjectCode(subj, coursenum);
+    }
+
+} 

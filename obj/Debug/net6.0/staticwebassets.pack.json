@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/rishit/src/repos/CourseView/bin/Debug/net6.0/wwwroot/_framework/blazor.webassembly.js",
+      "PackagePath": "staticwebassets/_framework/blazor.webassembly.js"
+    },
+    {
+      "Id": "/Users/rishit/src/repos/CourseView/obj/Debug/net6.0/build-gz/Grr9MH8I.gz",
+      "PackagePath": "staticwebassets/_framework/blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "/Users/rishit/src/repos/CourseView/wwwroot/favicon.ico",
+      "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/rishit/src/repos/CourseView/wwwroot/index.html",
+      "PackagePath": "staticwebassets/index.html"
+    },
+    {
+      "Id": "/Users/rishit/src/repos/CourseView/wwwroot/sample-data/weather.json",
+      "PackagePath": "staticwebassets/sample-data/weather.json"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.CourseView.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.build.CourseView.props",
+      "PackagePath": "build\\CourseView.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.CourseView.props",
+      "PackagePath": "buildMultiTargeting\\CourseView.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.CourseView.props",
+      "PackagePath": "buildTransitive\\CourseView.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
