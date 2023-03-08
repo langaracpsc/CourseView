@@ -1,9 +1,13 @@
 @page "/Course/{subject}/{courseNumber:int}"
 
 
-<PageTitle></PageTitle>
+<PageTitle>@this.Title</PageTitle>
 
-@if (this.Initialized && this.CurrentCourse == null)
+@if (!this.Initialized)
+{
+    <h3 align="center">Loading</h3>
+}
+else if (this.CurrentCourse == null && this.Initialized)
 {
     <h3 align="center">404 Page Not Found.</h3>
 }
@@ -56,7 +60,7 @@ else if (this.Initialized)
         }
         Console.WriteLine($"Course Size: {CourseManager.Courses.Length}");
         
-        this.Title = $"{Subject}{CourseNumber}";
+        this.Title = $"{Subject} {CourseNumber}";
         
         
         this.CurrentCourse = GetCourse(this.Subject, this.CourseNumber);
