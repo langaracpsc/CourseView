@@ -32,14 +32,19 @@ public partial class CourseStack : ComponentBase
     
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("Enter");
-        this.Courses = new Course[0]; 
-        
-        this.Content = await (new HttpClient().GetStringAsync("http://localhost:5157/courses"));
-        this.Courses = JsonSerializer.Deserialize<Course[]>(JsonSerializer.Deserialize<Hashtable>(this.Content)["Payload"].ToString());
+        if (!Initialized)
+        {
+            Console.WriteLine("Enter");
+            this.Courses = new Course[0];
 
-        this.Initialized = true;  
-        Console.WriteLine("Exit");
+            this.Content = await (new HttpClient().GetStringAsync("http://localhost:5157/courses"));
+            this.Courses =
+                JsonSerializer.Deserialize<Course[]>(JsonSerializer.Deserialize<Hashtable>(this.Content)["Payload"]
+                    .ToString());
+
+            this.Initialized = true;
+            Console.WriteLine("Exit");
+        }
     }
 
     public CourseStack()

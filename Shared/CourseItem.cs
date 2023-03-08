@@ -10,6 +10,11 @@ public partial class CourseItem : ComponentBase
     [Parameter] 
     public bool Visible { get; set; }
 
+    public NavigationManager NavManager;
+    
+    protected override void OnInitialized()
+    {
+    }
 
     public CourseItem()
     {

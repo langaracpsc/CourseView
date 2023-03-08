@@ -1,10 +1,12 @@
+@inject NavigationManager _navigationManager
+
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 @if (this.Visible)
 {
-    <MudPaper Class="align-center">
+    <MudPaper Class="align-center" @onclick="OnClick">
         <MudGrid Class="Justify align-center" Spacing="3" Justify="Justify.Center" Style="background-color: rgb(79, 79, 79); color: white; margin-top: 10px; border-radius: 20px; align-content: center">
             <MudItem xs=3 Style="align-content: center">
                 <MudText Class="align-center">
@@ -29,5 +31,9 @@
 }
 
 @code {
-     
+
+    void OnClick()
+    {
+        _navigationManager.NavigateTo($"/Course/{this.Instance.Subject}/{this.Instance.CourseNumber}");
+    }
 }
