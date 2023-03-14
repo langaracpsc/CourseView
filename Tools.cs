@@ -1,3 +1,5 @@
+using System.Xml.Schema;
+
 namespace CourseView
 {
     public class Tools
@@ -162,6 +164,17 @@ namespace CourseView
                 dayString += Convert.ToString((int)days[x]);
 
             return dayString;
+        }
+
+        public static bool IsEmpty(string str)
+        {
+            if (str == null || str.Length == 0)
+                return true;
+                
+            for (int x = 0; x < str.Length; x++)
+                if (!(str[x] == ' ' || str[x] == '\t'))
+                    return false;
+            return true;
         }
 
         public static DayOfWeek[] GetDaysFromDayString(string days)

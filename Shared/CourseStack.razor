@@ -11,7 +11,9 @@
 
 @if (this.Initialized)
 {
-    <MudTextField @bind-Value="@CourseFilters.Term"></MudTextField> <MudButton @onclick="Search">Search</MudButton>
+    <MudGrid>
+        <MudTextField @bind-Value="@QueryString"></MudTextField> <MudButton @onclick="Search">Search</MudButton>
+    </MudGrid>
     <div style="height:100vh;overflow-y:scroll; border-radius: 20px; padding: 10px 10px 10px 10px; align-content: center; /*display: flex; flex-direction: row; flex-wrap: wrap*/">
         @* <MudPaper Class="d-flex align-content-center flex-wrap flex-grow-1 gap-4" Style="overflow-y: scroll;" MaxWidth="608px" Height="100vh" Elevation="0"> *@
         <Virtualize Items="CourseManager.Courses">
@@ -26,6 +28,9 @@
 
     public string Content;
 
+
+    public string QueryString;
+    
     public HttpClient Client;
     
     public async Task UpdateAsync()
@@ -47,17 +52,12 @@
     {
         await Task.Run(async () =>
         {
-            this.Client = new HttpClient();
-           
-            HttpRequestMessage requestMessage= new HttpRequestMessage(HttpMethod.Get, "http://localhost:5157/courses/query");
-           
-            requestMessage.Headers.Add("query", JsonSerializer.Serialize(this.CourseFilters));
-
-            Console.WriteLine(JsonConvert.SerializeObject(this.CourseFilters));
+            if (Tools.IsEmpty(this.QueryString))
+               await CourseManager.FetchCourses();
+            else   
+                await CourseManager.FetchCoursesByQuery(Filters.FromQueryString(this.QueryString).ToHashmap());
             
-            this.Courses = JsonSerializer.Deserialize<Course[]>(JsonConvert.DeserializeObject<Hashtable>(await (await this.Client.SendAsync(requestMessage)).Content.ReadAsStringAsync())["Payload"].ToString());
-            
-            StateHasChanged();
+            this.StateHasChanged();
         });
     }
 

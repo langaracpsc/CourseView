@@ -13,7 +13,6 @@ public partial class CourseStack
 
     protected override void OnInitialized()
     {
-        this.CourseFilters = new Filters();
     }
 
     public CourseStack()
