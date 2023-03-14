@@ -9,7 +9,13 @@ namespace CourseView.Shared;
 
 public partial class CourseStack
 {
-  
+    public Filters CourseFilters;
+
+    protected override void OnInitialized()
+    {
+        this.CourseFilters = new Filters();
+    }
+
     public CourseStack()
     {
     }

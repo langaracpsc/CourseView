@@ -1,24 +1,32 @@
 @page "/Course"
-@using System.Text.Json;
 @using System.Collections;
 @using System.Collections.Generic;
+@using System.Diagnostics
+@using System.Net
+@using System.Runtime.CompilerServices
+@using Newtonsoft.Json
+@using JsonSerializer = System.Text.Json.JsonSerializer
 
 <h3>CourseStack</h3>
 
 @if (this.Initialized)
 {
+    <MudTextField @bind-Value="@CourseFilters.Term"></MudTextField> <MudButton @onclick="Search">Search</MudButton>
     <div style="height:100vh;overflow-y:scroll; border-radius: 20px; padding: 10px 10px 10px 10px; align-content: center; /*display: flex; flex-direction: row; flex-wrap: wrap*/">
         @* <MudPaper Class="d-flex align-content-center flex-wrap flex-grow-1 gap-4" Style="overflow-y: scroll;" MaxWidth="608px" Height="100vh" Elevation="0"> *@
         <Virtualize Items="CourseManager.Courses">
             <CourseItem Instance=@context Visible="true"></CourseItem>
         </Virtualize>
+        
         @* </MudPaper> *@
     </div>
 }
 @code {
-      public Course[] Courses { get; set; }
+    public Course[] Courses { get; set; }
 
     public string Content;
+
+    public HttpClient Client;
     
     public async Task UpdateAsync()
     { 
@@ -34,8 +42,25 @@
         
         return new ItemsProviderResult<Course>(this.Courses, this.Courses.Length);
     }
-    
-    
+
+    public async Task Search()
+    {
+        await Task.Run(async () =>
+        {
+            this.Client = new HttpClient();
+           
+            HttpRequestMessage requestMessage= new HttpRequestMessage(HttpMethod.Get, "http://localhost:5157/courses/query");
+           
+            requestMessage.Headers.Add("query", JsonSerializer.Serialize(this.CourseFilters));
+
+            Console.WriteLine(JsonConvert.SerializeObject(this.CourseFilters));
+            
+            this.Courses = JsonSerializer.Deserialize<Course[]>(JsonConvert.DeserializeObject<Hashtable>(await (await this.Client.SendAsync(requestMessage)).Content.ReadAsStringAsync())["Payload"].ToString());
+            
+            StateHasChanged();
+        });
+    }
+
     protected override async Task OnInitializedAsync()
     {
         if (CourseManager.Courses == null)
@@ -50,5 +75,5 @@
 
         this.Initialized = true;
     }
-} 
+}  
  
