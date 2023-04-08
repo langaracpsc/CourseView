@@ -3,23 +3,36 @@
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
-
-<MudLayout>
+<div class = "layout_wrapper">
+    <div class="foreground">
+        <MudLayout> @*Style="background: url('langara.jpg') no-repeat fixed; background-size: cover; background-position:center center; background-attachment: fixed; min-height: 100vh; min-width: 100vh; filter: blur(2px)"> *@
+            @*
     @* <MudAppBar Elevation="0" Class="align-content-center"> *@
-    @*     $1$ <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" /> #1# *@
-    @*     <MudSpacer /> *@
-    @*     <MudText Style="font-weight: bold; font-size: 30px; user-select: none;">CourseView</MudText> *@
-    @*     <MudSpacer /> *@
-    @*     $1$ <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank" /> #1# *@
-    @*     $1$ <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank" /> #1# *@
-    @* </MudAppBar> *@
-     
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
-            @Body
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
+            @*     $1$ <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" /> #1# *@
+            @*     <MudSpacer /> *@
+            @*     <MudText Style="font-weight: bold; font-size: 30px; user-select: none;">CourseView</MudText> *@
+            @*     <MudSpacer /> *@
+            @*     $1$ <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank" /> #1# *@
+            @*     $1$ <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank" /> #1# *@
+            @* </MudAppBar> *@
+
+            <MudMainContent>
+                <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16 d-flex" Style="color:white; margin-top: 50%;">
+                    @Body
+                </MudContainer>
+            </MudMainContent>
+        </MudLayout>
+    </div>
+    <div class="background"></div>
+</div>
+@* *@
+    @* <div style="display: grid; grid-template-rows: 20% 60% 20%; height: 100vh; width: 100vh"> *@
+    @*     <div style="grid-row-start: 1; grid-row-end: 2"></div> *@
+    @*     <div style="grid-row-start: 2; grid-row-end:3; align-content: center; align-items: center"> *@
+    @*         <div style="position: relative;"></div> *@
+    @*     </div> *@
+    @*     <div style="grid-row-start: 3; grid-row-end: 4"></div> *@
+    @* </div> *@
 
 @code {
     bool _drawerOpen = true;
