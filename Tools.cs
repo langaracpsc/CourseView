@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Xml.Schema;
 
 namespace CourseView
@@ -156,6 +157,92 @@ namespace CourseView
             return strings;
         }
 
+        public static int AddArray(int[] ints)
+        {
+            int sum = 0;
+            
+            for (int x = 0; x < ints.Length; x++)
+                sum += ints[x];
+            
+            return sum;
+        }
+
+        public static string ToUpper(string str)
+        {
+            int ascii;
+            string alteredString = null;
+            
+            for (int x = 0; x < str.Length; x++)
+                if (Tools.InRange((ascii = (int)str[x]), 97, 123))
+                    alteredString += (char)(ascii - 32);
+                else
+                    alteredString += str[x];
+            
+            return alteredString;
+        }
+
+        public static T[] CastArray<T>(object[] objects)
+        {
+            T[] casted = new T[objects.Length];
+
+            for (int x = 0; x < objects.Length; x++)
+                casted[x] = (T)objects[x];
+                
+            return casted;
+        }
+
+        public static int SeekWhiteSpace(string str, int start = 0)
+        {
+            int x;
+        
+            for (x = start; (str[x] == ' ' || str[x] == '\t') && x < str.Length; x++) ;
+
+            return x;
+        }
+
+        /// <summary>
+        /// Splits the provided string based on contiguous whitespaces
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string[] ContiguousWhitespaceSplit(string str)
+        {
+            List<string> splitStack = new List<string>();
+
+            int temp;
+            
+            for (int x = 0; x < str.Length; x++)
+                if ((str[x] == ' ' || str[x] == '\t'))
+                {
+                    splitStack.Add(str.Substring(x, (temp = Tools.SeekWhiteSpace(str, x) - x)));
+                    x = temp;
+                }
+
+            return splitStack.ToArray();
+        }
+
+        /// <summary>
+        /// Divides the provided string in the given ratio.
+        /// </summary>
+        /// <param name="str">String tobe divided.</param>
+        /// <param name="parts">Ratio to divide the string in.</param>
+        /// <returns> Divided string. </returns>
+        public static string[] DivideString(string str, int[] parts)
+        {
+            string[] divided;
+
+            if (Tools.AddArray(parts) > str.Length)
+                return null;
+
+            divided = new string[parts.Length];
+
+            for (int x = 0, prev = 0; x < parts.Length; prev += parts[x], x++)
+                divided[x] = str.Substring(prev, parts[x]);
+            
+            return divided;
+        }
+
+
         public static string GetDaysString(DayOfWeek[] days)
         {
             string dayString = null;
@@ -174,6 +261,7 @@ namespace CourseView
             for (int x = 0; x < str.Length; x++)
                 if (!(str[x] == ' ' || str[x] == '\t'))
                     return false;
+            
             return true;
         }
 

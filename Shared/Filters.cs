@@ -8,7 +8,7 @@ public struct Filters
 
     public string Subject { get; set; }
 
-    public string CourseNumber { get; set; }
+    public int CourseNumber { get; set; }
 
     public static Filters FromQueryString(string queryString)
     {
@@ -16,25 +16,31 @@ public struct Filters
 
         Console.WriteLine(queryString);
         
-        return new Filters(split[0], split[1], split[2]);
+        return new Filters(split[0], split[1], int.Parse(split[2]));
     }
 
     public Hashtable ToHashmap()
     {
         Hashtable hashMap = new Hashtable();
 
-        hashMap.Add("Term", this.Term);
-        hashMap.Add("Subj", this.Subject);
+        hashMap.Add("Term", (this.Term == null) ? this.Term : $"%{this.Term}%");
+        hashMap.Add("Subj", (this.Subject == null) ? this.Subject : $"%{Tools.ToUpper(this.Subject)}%");
         hashMap.Add("CourseNumber", this.CourseNumber);
         
         return hashMap;
     }
 
-    public Filters(string term = null, string subject = null, string courseNumber = null)
+    public bool IsNull()
     {
-        this.Term = term;
+        return (this.Term == null && this.Subject == null && this.CourseNumber == 0);
+    }
+
+    public Filters(string term = null, string subject = null, int courseNumber = 0)
+    {
+        this. Term = term;
         this.Subject = subject;
         this.CourseNumber = courseNumber;
     }
 }
+ 
 

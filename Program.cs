@@ -25,6 +25,7 @@ namespace CourseView
             //Console.WriteLine($"Payload: {JsonConvert.DeserializeObject<Hashtable>(new HttpClient().GetAsync("http://localhost:5157/course").Result.Content.ReadAsStringAsync().Result)["Payload"]}");
 
             CourseManager.LoadConfig();
+            CourseManager.Initialize();
             
             await builder.Build().RunAsync();
         }

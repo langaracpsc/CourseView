@@ -9,71 +9,55 @@
 
 <h3>CourseStack</h3>
 
+@code
+{
+    public bool ResultsVisible = false;
+    
+    
+}
+
 @if (this.Initialized)
 {
     <MudGrid>
-        <MudTextField @bind-Value="@QueryString"></MudTextField> <MudButton @onclick="Search">Search</MudButton>
-    </MudGrid>
-    <div style="height:100vh;overflow-y:scroll; border-radius: 20px; padding: 10px 10px 10px 10px; align-content: center; /*display: flex; flex-direction: row; flex-wrap: wrap*/">
-        @* <MudPaper Class="d-flex align-content-center flex-wrap flex-grow-1 gap-4" Style="overflow-y: scroll;" MaxWidth="608px" Height="100vh" Elevation="0"> *@
-        <Virtualize Items="CourseManager.Courses">
-            <CourseItem Instance=@context Visible="true"></CourseItem>
-        </Virtualize>
+        @* <MudSelect T="string" Style="z-index: 1" Variant="Variant.Text" xs="2" OnOpen="() => { this.ResultsVisible = (this.QueryString != null); }" ValueChanged = "()=>{ this.ResultsVisible = true; }"> *@
+        @*     @for (int x = 0; x < CourseManager.Terms.Length; x++) *@
+        @*     { *@
+        @*         <MudSelectItem Value="@(CourseManager.Terms[x].ToLabelString())" OnClick="() => { Console.WriteLine(CourseManager.Terms[x].ToLabelString()); }"/> *@
+        @*     } *@
+        @* </MudSelect> *@
+        <MudTextField @bind-Value="@QueryString" Immediate="true"  xs="8" TextChanged="@Search"></MudTextField>
+        <MudButton @onclick="Search" xs="2">Search</MudButton>
         
-        @* </MudPaper> *@
-    </div>
+        @if (ResultsVisible)
+        {
+            <MudContainer xs="12">
+            <div style="height: 80vh; overflow-y:scroll; align-content: center; margin-top: 35px;/*display: flex; flex-direction: row; flex-wrap: wrap*/">
+
+                @* <MudPaper Class="d-flex align-content-center flex-wrap flex-grow-1 gap-4" Style="overflow-y: scroll;" MaxWidth="608px" Height="100vh" Elevation="0"> *@
+                <Virtualize Items="@CourseManager.Courses" SpacerElement="div">
+                    <ItemContent>
+                        <CourseItem Instance=@context Visible="true"></CourseItem>
+                        <div style="height: 5px;"></div>
+                    </ItemContent>
+                    <Placeholder>
+                        <Card>
+                            <CardTitle Title="Loading..."/>
+                            <CardContent>
+                                In progress...
+                            </CardContent>
+                        </Card>
+                    </Placeholder>
+
+                </Virtualize>
+
+                @* </MudPaper> *@</div></MudContainer>
+    }
+    </MudGrid>
+    
 }
 @code {
-    public Course[] Courses { get; set; }
-
-    public string Content;
-
-
-    public string QueryString;
-    
-    public HttpClient Client;
-    
-    public async Task UpdateAsync()
-    { 
-        this.Courses = await CourseManager.FetchCourses();
-    }
-
-    public bool Initialized;
-   
-    public async ValueTask<ItemsProviderResult<Course>> GetCoures(ItemsProviderRequest request)
-    {
-        if (!this.Initialized)
-            await this.OnInitializedAsync();
-        
-        return new ItemsProviderResult<Course>(this.Courses, this.Courses.Length);
-    }
-
-    public async Task Search()
-    {
-        await Task.Run(async () =>
-        {
-            if (Tools.IsEmpty(this.QueryString))
-               await CourseManager.FetchCourses();
-            else   
-                await CourseManager.FetchCoursesByQuery(Filters.FromQueryString(this.QueryString).ToHashmap());
-            
-            this.StateHasChanged();
-        });
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (CourseManager.Courses == null)
-        {
-            Console.WriteLine("Enter");
-            this.Content = await (new HttpClient().GetStringAsync("http://localhost:5157/courses"));
-            CourseManager.Courses =
-                JsonSerializer.Deserialize<Course[]>(JsonSerializer.Deserialize<Hashtable>(this.Content)["Payload"]
-                    .ToString());
-            Console.WriteLine("Exit");
-        }
-
-        this.Initialized = true;
-    }
 }  
+ 
+
+ 
  
