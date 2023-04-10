@@ -21,7 +21,7 @@
 {
     <MudGrid>
         <MudContainer xs="12" Style="align-items: center">
-        <MudText Class="logotext">Course<span style="color: #F15A22">View</span></MudText>
+        <MudText Align="Align.Center" Class="logotext">Course<span style="color: #F15A22">View</span></MudText>
         </MudContainer>
         @* <MudSelect T="string" Style="z-index: 1" Variant="Variant.Text" xs="2" OnOpen="() => { this.ResultsVisible = (this.QueryString != null); }" ValueChanged = "()=>{ this.ResultsVisible = true; }"> *@
         @*     @for (int x = 0; x < CourseManager.Terms.Length; x++) *@
@@ -29,9 +29,10 @@
         @*         <MudSelectItem Value="@(CourseManager.Terms[x].ToLabelString())" OnClick="() => { Console.WriteLine(CourseManager.Terms[x].ToLabelString()); }"/> *@
         @*     } *@
         @* </MudSelect> *@
-        <MudTextField @bind-Value="@QueryString" Variant="Variant.Outlined" Label="Search for courses." Immediate="true" xs="8" TextChanged="@Search"></MudTextField>
-        <MudButton @onclick="Search" xs="2">Search</MudButton>
-
+        <MudTextField Style="color: black; background-color: white; border-radius: 3px;"@bind-Value="@QueryString" Variant="Variant.Outlined" Label="Search for courses." Immediate="true" xs="8" TextChanged="@Search"></MudTextField>
+        @* <MudButton @onclick="Searc
+        h" xs="2">Search</MudButton> *@
+        <MudFab Style="color: black; background-color: white; margin-top: 5px; margin-left: 5px;" StartIcon="@Icons.Material.Filled.Search" @onclick="@Search"></MudFab>
         @if (ResultsVisible)
         {
             <MudContainer xs="12">
